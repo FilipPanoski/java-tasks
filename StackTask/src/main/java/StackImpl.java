@@ -11,10 +11,12 @@ public class StackImpl<E> implements Stack<E> {
     }
 
     @Override
-    public void push(E newElement) {
+    public void push(E newElement) throws FullStackException {
         try {
             elements[size++] = newElement;
-        } catch (ArrayIndexOutOfBoundsException ex){ ex.printStackTrace();}
+        } catch (Exception ex){
+            throw new FullStackException("Unable to push new element, stack is full!");
+        }
     }
 
     @Override
@@ -58,5 +60,10 @@ public class StackImpl<E> implements Stack<E> {
     @Override
     public int getSize() {
         return size;
+    }
+
+    @Override
+    public int getMaximumSize(){
+        return elements.length;
     }
 }
