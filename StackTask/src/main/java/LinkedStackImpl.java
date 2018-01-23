@@ -4,15 +4,19 @@ public class LinkedStackImpl<E> implements Stack {
 
     private LinkedStackNode<E> top;
     private int size;
+    private int maximumSize;
 
     public LinkedStackImpl(){
         top = null;
+        size = 0;
+        maximumSize = 1;
     }
 
     @Override
     public synchronized void push(Object newElement) {
         top = new LinkedStackNode<E>((E) newElement, top);
         size++;
+        maximumSize++;
     }
 
     @Override
@@ -23,6 +27,7 @@ public class LinkedStackImpl<E> implements Stack {
         E lastElement = top.element;
         top = top.successor;
         size--;
+        maximumSize--;
         return lastElement;
     }
 
@@ -40,32 +45,22 @@ public class LinkedStackImpl<E> implements Stack {
     }
 
     @Override
+    public synchronized Boolean isFull() {
+        return (size == maximumSize);
+    }
+
+    @Override
+    public synchronized void grow(int additionalSize) {
+        maximumSize += additionalSize;
+    }
+
+    @Override
     public synchronized int getSize() {
         return size;
     }
 
-
-    /**
-     * This method is redundant for a LinkedStack implementation.
-     */
     @Override
-    public void grow(int additionalSize) {
-
-    }
-
-    /**
-     * This method is redundant for a LinkedStack implementation.
-     */
-    @Override
-    public Boolean isFull() {
-        return null;
-    }
-
-    /**
-     * This method is redundant for a LinkedStack implementation.
-     */
-    @Override
-    public int getMaximumSize() {
-        return 0;
+    public synchronized int getMaximumSize() {
+        return maximumSize;
     }
 }

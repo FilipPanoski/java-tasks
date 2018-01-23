@@ -79,4 +79,31 @@ public class LinkedStackImplTest {
         stack.pop();
         assertEquals(0, stack.getSize());
     }
+
+    @Test
+    public void testGetMaximumSizeMethodWhenStackHasElements() throws Exception {
+        stack.push(1);
+        stack.grow(3);
+        assertEquals(5, stack.getMaximumSize());
+    }
+
+    @Test
+    public void testGetMaximumSizeMethodWhenStackHasNoElements() throws Exception {
+        stack.grow(3);
+        assertEquals(4, stack.getMaximumSize());
+    }
+
+    @Test
+    public void testIsFullMethod() throws Exception {
+        stack.push(1);
+        stack.push(2);
+        assertEquals(false, stack.isFull());
+    }
+
+    @Test
+    public void testGrowMethod() throws Exception {
+        stack.push(1);
+        stack.push(2);
+        assertEquals(3, stack.getMaximumSize());
+    }
 }
