@@ -2,8 +2,8 @@ import java.util.EmptyStackException;
 
 public class StackImpl<E> implements Stack<E> {
 
-    E[] elements;
-    int size;
+    private E[] elements;
+    private int size;
 
     public StackImpl(int maxSize){
         elements = (E[]) new Object[maxSize];
@@ -11,7 +11,7 @@ public class StackImpl<E> implements Stack<E> {
     }
 
     @Override
-    public void push(E newElement) throws FullStackException {
+    public synchronized void push(E newElement) throws FullStackException {
         try {
             elements[size++] = newElement;
         } catch (Exception ex){
@@ -20,7 +20,7 @@ public class StackImpl<E> implements Stack<E> {
     }
 
     @Override
-    public E pop() {
+    public synchronized E pop() {
         if (size == 0) {
             throw new EmptyStackException();
         }
@@ -30,7 +30,7 @@ public class StackImpl<E> implements Stack<E> {
     }
 
     @Override
-    public E peek() {
+    public synchronized E peek() {
         if (size == 0){
             throw new EmptyStackException();
         }
@@ -38,7 +38,7 @@ public class StackImpl<E> implements Stack<E> {
     }
 
     @Override
-    public void grow(int additionalSize) {
+    public synchronized void grow(int additionalSize) {
        E[] updatedStack = (E[]) new Object[elements.length + additionalSize];
        for(int i = 0; i<size; i++){
            updatedStack[i] = elements[i];
@@ -48,22 +48,22 @@ public class StackImpl<E> implements Stack<E> {
 
 
     @Override
-    public Boolean isEmpty() {
+    public synchronized Boolean isEmpty() {
         return (size == 0);
     }
 
     @Override
-    public Boolean isFull() {
+    public synchronized Boolean isFull() {
         return (elements.length == size);
     }
 
     @Override
-    public int getSize() {
+    public synchronized int getSize() {
         return size;
     }
 
     @Override
-    public int getMaximumSize(){
+    public synchronized int getMaximumSize(){
         return elements.length;
     }
 }
